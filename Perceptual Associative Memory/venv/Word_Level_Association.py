@@ -1,5 +1,3 @@
-import nltk
-
 ## DOCUMENTATION ##
 
 """""
@@ -61,7 +59,6 @@ sentences = \
                 "timeStamp" : "timeStamp",
                 "time"      : "tense"
             }
-
     }
     
 # Try
@@ -69,21 +66,24 @@ sentences = \
 
 """""
 
+from nltk import word_tokenize, sent_tokenize, pos_tag, ne_chunk_sents
+from I_Fix import fix_i
+
 def AssociateWordLevelTags(text):
-    sentences = nltk.sent_tokenize(text)
-    tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
-    tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
-    chunked_sentences = nltk.ne_chunk_sents(tagged_sentences)
+    sentences = sent_tokenize(text)
+    tokenized_sentences = [word_tokenize(sentence) for sentence in sentences]
+    print(tokenized_sentences)
+    tokenized_sentences = fix_i(tokenized_sentences)
+    print(tokenized_sentences)
+    tagged_sentences = [pos_tag(fix_i(sentence)) for sentence in tokenized_sentences]
+    chunked_sentences = ne_chunk_sents(tagged_sentences)
 
     tagged_text = {}
     sentence_count = 0
     for tree in chunked_sentences:
-        #tagged_text[sentence_count] = tree
-        print("tree : ", tree)
         words_tags = {}
         word_count = 0
         for child in tree:
-            print("child : ",child)
             word_tags = {}
             if hasattr(child, 'label'):
                 word_tags["word_label"] = child[0][0]
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     # with open('sample.txt', 'r') as f:
     #     document = f.read()
 
-    document = "My Name is Mahmood Hussain. I live in Lahore, Punjab, Pakistan. I study in COMSATS University Islamabad."
+    document = "My Name is Mahmood Hussain. i live in Lahore, Punjab, Pakistan. i study in COMSATS University Islamabad."
 
     tagged_text = AssociateWordLevelTags(document)
 
