@@ -1,6 +1,8 @@
 # NiHA_Chatbot
 
-## PyCharm
+## PYTHON Interpreter & Virtual Environment Configuration 
+
+### PyCharm
 To run any file within the pycharm 
 you need to do Interpreter configuration:
 1. goto File -> setting -> project interpreter
@@ -9,13 +11,14 @@ you need to do Interpreter configuration:
 4. Browse to ~/NiHA_Chatbot/Perceptual Associative Memory/venv/Scripts/
 5. select Python35.exe and ok 
 
-## Console
+### Console
 To run on console just need to activate venv:
 1. cd to ~/NiHA_Chatbot/Perceptual Associative Memory/venv
 2. run command : Scripts/activate
 3. now run any file within project using : python35 filename
 
-## Modules in Perceptual Associative Memory
+################################################
+### Modules in Perceptual Associative Memory
 1- Word_Level_Association.py
     Takes text from sensory signal and returns text_signal 
     output contains 
