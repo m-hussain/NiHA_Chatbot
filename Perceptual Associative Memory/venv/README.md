@@ -15,3 +15,10 @@ To run on console just need to activate venv:
 2. run command : Scripts/activate
 3. now run any file within project using : python35 filename
 
+## Modules in Perceptual Associative Memory
+1- Word_Level_Association.py
+    Takes text from sensory signal and returns text_signal 
+    output contains 
+    all word level tag association for all sentences in gievn text
+    
+    
