@@ -72,9 +72,6 @@ from I_Fix import fix_i
 def AssociateWordLevelTags(text):
     sentences = sent_tokenize(text)
     tokenized_sentences = [word_tokenize(sentence) for sentence in sentences]
-    print(tokenized_sentences)
-    tokenized_sentences = fix_i(tokenized_sentences)
-    print(tokenized_sentences)
     tagged_sentences = [pos_tag(fix_i(sentence)) for sentence in tokenized_sentences]
     chunked_sentences = ne_chunk_sents(tagged_sentences)
 
@@ -110,4 +107,10 @@ if __name__ == '__main__':
 
     tagged_text = AssociateWordLevelTags(document)
 
-    print(tagged_text)
+    print("tagged text: \n", tagged_text)
+    for sentence in tagged_text:
+        print("sentence ",sentence, " : ")
+        words = tagged_text[sentence]
+        for word in words:
+            print("\t\tword ",word," : ", words[word])
+        print()

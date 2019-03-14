@@ -1,6 +1,6 @@
 from posTagger import *
 
-def getType(Sentence):
+def getType(Sentence, POS_Tagged_Sentence):
 
     sentenceType = ""
 

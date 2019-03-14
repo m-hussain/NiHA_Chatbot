@@ -3,7 +3,7 @@ from    timeAnalysis            import *
 from    placeAnalysis           import *
 from    personAnalysis          import *
 from    topicAnalysis           import *
-from    typeOfSentenceAnalysis  import *
+from    TOS_Analyzer  import *
 
 def sentenceTagger(Sentence):
 

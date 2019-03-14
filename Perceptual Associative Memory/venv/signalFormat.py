@@ -58,14 +58,16 @@ if __name__ == '__main__':
     sentences_signal = {}
     while(True):
         text = input("Text : ")
+        #text = "This is cat. Cat is cute."
         sentences = sent_tokenize(text)
         sentences_count = 0
-        print(sentences)
+        #print(sentences)
         for sentence in sentences:
             sentence_signal = {}
             sentence_signal[sentence_label] = sentence
 
             words = word_tokenize(sentence)
+            #print(words)
             word_count = 0
             words_signal = {}
             for word in words:
@@ -79,12 +81,14 @@ if __name__ == '__main__':
             sentences_signal[sentences_count] = sentence_signal
             sentences_count += 1
 
-        #print("sentence signal : ", sentences_signal)
-        for sentence_count in sentences_signal:
-            print()
-            print("SENTENCE_ID : ", sentence_count, "\nSENTENCE_SIGNAL : ", sentences_signal[sentence_count])
-            for attribute in sentences_signal[sentence_count]:
-                print("\tATTRIBUTE : ", attribute, ", \tVALUE : ", sentences_signal[sentence_count][attribute])
+        print("sentence signal : ", sentences_signal)
+        # for sentence_count in sentences_signal:
+        #     print(sentence_count)
+            #print("sentence_signal_id : ", sentence_count, "\nsentence_signal : ", sentences_signal[sentence_count])
+            #print("___DETAILS___")
+            # print("sentence_signal_id : ", sentence_count)
+            # for attribute in sentences_signal[sentence_count]:
+            #     print("\t\t", attribute, " : ", sentences_signal[sentence_count][attribute])
 
         # for token_sentence in tokenized_sentences:
         #     sentences[sentences_count][sentence_label]= token_sentence
