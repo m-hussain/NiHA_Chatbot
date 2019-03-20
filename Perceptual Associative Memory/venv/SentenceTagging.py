@@ -1,4 +1,4 @@
-from    sentimentAnalysis       import *
+from    SentimentAnalyzer       import *
 from    timeAnalysis            import *
 from    placeAnalysis           import *
 from    personAnalysis          import *

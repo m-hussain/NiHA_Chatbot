@@ -47,13 +47,14 @@ sentences = \
 if __name__ == '__main__':
 
     from nltk import sent_tokenize, word_tokenize
-    sentence_label = "sentence_label"
-    words_in_sentence = "words"
-    sentiment = "sentiment"
-    person = "person"
-    location = "location"
-    timeStamp = "timeStamp"
-    timeOfConversation = "tense"
+    sentence_label      = "sentence_label"
+    words_in_sentence   = "words"
+    sentiment           = "sentiment"
+    person              = "person"
+    location            = "location"
+    timeStamp           = "timeStamp"
+    timeOfConversation  = "tense"
+    word_label          = "word_label"
 
     sentences_signal = {}
     while(True):
@@ -65,6 +66,8 @@ if __name__ == '__main__':
         for sentence in sentences:
             sentence_signal = {}
             sentence_signal[sentence_label] = sentence
+            sentence_signal[sentiment] = "Call_Sentiment_Method_Here"
+
 
             words = word_tokenize(sentence)
             #print(words)
@@ -72,7 +75,7 @@ if __name__ == '__main__':
             words_signal = {}
             for word in words:
                 word_signal = {}
-                word_signal["label"] = word
+                word_signal[word_label] = word
                 words_signal[word_count] = word_signal
                 word_count += 1
             #print("words_signal", words_signal)
@@ -82,15 +85,10 @@ if __name__ == '__main__':
             sentences_count += 1
 
         print("sentence signal : ", sentences_signal)
-        # for sentence_count in sentences_signal:
-        #     print(sentence_count)
-            #print("sentence_signal_id : ", sentence_count, "\nsentence_signal : ", sentences_signal[sentence_count])
-            #print("___DETAILS___")
-            # print("sentence_signal_id : ", sentence_count)
-            # for attribute in sentences_signal[sentence_count]:
-            #     print("\t\t", attribute, " : ", sentences_signal[sentence_count][attribute])
-
-        # for token_sentence in tokenized_sentences:
-        #     sentences[sentences_count][sentence_label]= token_sentence
-        # print(sentences)
-        # sentences_count += 1
+        for sentence_signal_count in sentences_signal:
+        #     print(sentence_signal_count)
+        #     print("sentence_signal_id : ", sentence_count, "\nsentence_signal : ", sentences_signal[sentence_count])
+        #     print("___DETAILS___")
+            print("sentence_signal_id : ", sentence_signal_count)
+            for attribute in sentences_signal[sentence_signal_count]:
+                print("\t\t", attribute, " : ", sentences_signal[sentence_signal_count][attribute])

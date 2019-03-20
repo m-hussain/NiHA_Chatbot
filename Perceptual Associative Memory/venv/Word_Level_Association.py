@@ -70,12 +70,13 @@ from nltk import word_tokenize, sent_tokenize, pos_tag, ne_chunk_sents
 from I_Fix import fix_i
 
 def AssociateWordLevelTags(text):
+    tagged_text = {}
+
     sentences = sent_tokenize(text)
     tokenized_sentences = [word_tokenize(sentence) for sentence in sentences]
     tagged_sentences = [pos_tag(fix_i(sentence)) for sentence in tokenized_sentences]
     chunked_sentences = ne_chunk_sents(tagged_sentences)
 
-    tagged_text = {}
     sentence_count = 0
     for tree in chunked_sentences:
         words_tags = {}
