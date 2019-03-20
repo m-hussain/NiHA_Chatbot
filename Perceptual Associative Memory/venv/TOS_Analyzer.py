@@ -76,25 +76,67 @@ def isRule7(POS_Tagged_Sentence):
     ): return True, description
     else: return False, "rule failed"
 
-def isQuestion(Sentence, POS_Tagged_Sentence):
+
+def checkRulesForLenght1(Sentence, POS_Tagged_Sentence):
     reason = []
     isQuestion = False
+
+    passed, description = isRule1(Sentence)
+    if passed:
+        reason.append(description)
+        isQuestion = True
+
+    passed, description = isRule3(POS_Tagged_Sentence)
+    if passed:
+        reason.append(description)
+        isQuestion = True
+
+    passed, description = isRule5(Sentence)
+    if passed:
+        reason.append(description)
+        isQuestion = True
+    return isQuestion, reason
+
+def checkRulesForLenght2(Sentence, POS_Tagged_Sentence):
+    reason = []
+    isQuestion = False
+
+    checkRulesForLenght1(Sentence, POS_Tagged_Sentence)
+
+    #Logic Specific for length 2
+    return isQuestion, reason
+
+def checkRulesForLenght3orMore(Sentence, POS_Tagged_Sentence):
+    reason = []
+    isQuestion = False
+
+    checkRulesForLenght2(Sentence, POS_Tagged_Sentence)
+
+    #Logic Specific for length 3 or more
+    return isQuestion, reason
+
+
+
+
+def isQuestion(Sentence, POS_Tagged_Sentence):
+    isQuestion = False
+    reason = []
+
     if (len(Sentence) == 1): # Rule1, Rule3 and Rule5
-        passed, description = isRule1(Sentence)
-        if passed:
-            reason.append(description)
-            isQuestion = True
+        isQuestion, reason = checkRulesForLenght1(Sentence, POS_Tagged_Sentence)
 
-        passed, description = isRule3(POS_Tagged_Sentence)
-        if passed:
-            reason.append(description)
-            isQuestion = True
+    if (len(Sentence) == 2): # Rule1, Rule3 and Rule5
+        isQuestion, reason = checkRulesForLenght2(Sentence, POS_Tagged_Sentence)
 
-        passed, description = isRule5(Sentence)
-        if passed:
-            reason.append(description)
-            isQuestion = True
-    #
+    if (len(Sentence) >= 3):  # Rule1, Rule3 and Rule5
+        isQuestion, reason = checkRulesForLenght1(Sentence, POS_Tagged_Sentence)
+
+    return isQuestion, reason
+
+
+    # if ():
+    #     pass
+    # #
     # if (len(sentence) == 2):
     #
     #     pass
