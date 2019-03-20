@@ -45,8 +45,12 @@
 from nltk import word_tokenize, sent_tokenize, pos_tag, ne_chunk_sents
 from SentimentAnalyzer import getSentiment
 from TOS_Analyzer import getType
+from SystemTime import getSystemTime
 from I_Fix import fix_i
+from ContractionExpander import expandContraction
+from utilities import print_sentences_signal
 
+## SENTENCE LEVEL PROPERTIES
 sentence_label      = "sentence_label"
 pos_tagged_sentence = "sentence_pos"
 words_in_sentence   = "words"
@@ -55,11 +59,18 @@ person              = "person"
 location            = "location"
 timeStamp           = "timeStamp"
 timeOfConversation  = "tense"
-word_label          = "word_label"
+typeOfSentence      = "type"
 
-sentences_signal = {}
+## WORD LEVEL PROPERTIES
+word_label          = "word_label"
+word_pos            = "word_pos"
+word_ne             = "entity"
+
+
 while (True):
+    sentences_signal = {}
     text = input("Text : ")
+    text = expandContraction(text)
     # text = "This is cat. Cat is cute."
     #sentences = sent_tokenize(text)
 
@@ -83,8 +94,8 @@ while (True):
         sentence_signal[sentence_label] = sentence
         sentence_signal[sentiment] = getSentiment(sentence)
         sentence_signal[pos_tagged_sentence] = tagged_sentences[sentences_count]
-        sentence_signal["type"] = getType(sentence, sentence_signal[pos_tagged_sentence])
-
+        sentence_signal[typeOfSentence] = getType(sentence, sentence_signal[pos_tagged_sentence])
+        sentence_signal[timeStamp] = getSystemTime()
         words = word_tokenize(sentence)
         # print(words)
         word_count = 0
@@ -100,11 +111,13 @@ while (True):
         sentences_signal[sentences_count] = sentence_signal
         sentences_count += 1
 
-    print("sentence signal : ", sentences_signal)
-    for sentence_signal_count in sentences_signal:
-        #     print(sentence_signal_count)
-        #     print("sentence_signal_id : ", sentence_count, "\nsentence_signal : ", sentences_signal[sentence_count])
-        #     print("___DETAILS___")
-        print("sentence_signal_id : ", sentence_signal_count)
-        for attribute in sentences_signal[sentence_signal_count]:
-            print("\t\t", attribute, " : ", sentences_signal[sentence_signal_count][attribute])
+    # print("sentence signal : ", sentences_signal)
+    # for sentence_signal_count in sentences_signal:
+    #     #     print(sentence_signal_count)
+    #     #     print("sentence_signal_id : ", sentence_count, "\nsentence_signal : ", sentences_signal[sentence_count])
+    #     #     print("___DETAILS___")
+    #     print("sentence_signal_id : ", sentence_signal_count)
+    #     for attribute in sentences_signal[sentence_signal_count]:
+    #         print("\t\t", attribute, " : ", sentences_signal[sentence_signal_count][attribute])
+
+    print_sentences_signal(sentences_signal)
