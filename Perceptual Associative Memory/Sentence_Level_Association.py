@@ -44,7 +44,7 @@
 #from nltk import sent_tokenize, word_tokenize
 from nltk import word_tokenize, sent_tokenize, pos_tag, ne_chunk_sents
 from SentimentAnalyzer import getSentiment
-from TOS_Analyzer import getType
+from Type_of_Sentence_Analyzer import getType
 from SystemTime import getSystemTime
 from I_Fix import fix_i
 from ContractionExpander import expandContraction
