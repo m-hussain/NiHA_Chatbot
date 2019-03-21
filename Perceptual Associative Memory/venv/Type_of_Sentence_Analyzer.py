@@ -1,23 +1,3 @@
-#@ TODO Implement Each of following and shift in releative files
-# def isExclamation(Sentence, POS_Tagged_Sentence):
-#     isExclamation = False
-#     reason = []
-#
-#     return isExclamation, reason
-#
-# def isNegation(Sentence, POS_Tagged_Sentence):
-#     isNegation = False
-#     reason = []
-#
-#     return isNegation, reason
-#
-# def isOrder(Sentence, POS_Tagged_Sentence):
-#     isOrder = False
-#     reason = []
-#
-#     return isOrder, reason
-
-
 from QuestionRecognizer import isQuestion
 
 # Getting Type by analyzing all possible types of sentences
@@ -27,7 +7,7 @@ def getType(Sentence, POS_Tagged_Sentence):
 
     isQ, reason = isQuestion(Sentence, POS_Tagged_Sentence)
     if isQ:
-        sentenceType = "Interrogative"
+        sentenceType = "interrogative"
 
     # isN, reason = isNegation(Sentence, POS_Tagged_Sentence)
     # if isN:
