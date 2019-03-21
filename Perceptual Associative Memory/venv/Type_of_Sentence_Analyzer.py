@@ -62,5 +62,5 @@ if __name__ == '__main__':
         p_s = tagPOS(s)
 
         #s = s.lower()
-        type, reason = getType(s, p_s)
+        type, reason = getSentenceType(s, p_s)
         print("type : ", type, ", reason : ", reason)

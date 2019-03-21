@@ -50,18 +50,19 @@ from I_Fix import fix_i
 from ContractionExpander import expandContraction
 from utilities import print_sentences_signal
 from Word_Level_Association import AssociateWordLevelTags
-
+from LocationAnalyzer import getLocation_NE
 
 ## SENTENCE LEVEL PROPERTIES
-sentence_label      = "sentence_label"
-pos_tagged_sentence = "sentence_pos"
-words_in_sentence   = "words"
-sentiment           = "sentiment"
+sentence_label      = "sentence_label"  #done
+pos_tagged_sentence = "sentence_pos"    #done
+words_in_sentence   = "words"           #done
+sentiment           = "sentiment"       #done
 person              = "person"
-location            = "location"
-timeStamp           = "timeStamp"
-timeOfConversation  = "tense"
-typeOfSentence      = "type"
+place               = "location"
+timeStamp           = "timeStamp"       #done
+timeOfConversation  = "tense"           #done
+typeOfSentence      = "type"            #done
+topic               = "topic"
 
 ## WORD LEVEL PROPERTIES
 word_label          = "word_label"
@@ -72,29 +73,16 @@ word_ne             = "entity"
 def AssociateSentenceLevelTags(text):
     sentences_signal = {}
     text = expandContraction(text)
-    # text = "This is cat. Cat is cute."
-    #sentences = sent_tokenize(text)
 
+    #TODO use sentence__level__pos_tagger and sentence__level__word_tokenizer
     sentences = sent_tokenize(text)
     tokenized_sentences = [word_tokenize(sentence) for sentence in sentences]
-    # print("tokenized_sentences : ", tokenized_sentences)
     tagged_sentences = [pos_tag(fix_i(sentence)) for sentence in tokenized_sentences]
     chunked_sentences = ne_chunk_sents(tagged_sentences)
-    #
-    # for sentence in sentences:
-    #     tagged_text["sentence_label"] = sentence
-    #
-    # for tagged_sentence in tagged_sentences:
-    #     tagged_text["sentence_pos"] = tagged_sentence
-    #
 
     Word_Level_Tagged_Sentences = AssociateWordLevelTags(chunked_sentences)
 
-    # for item in Word_Level_Tagged_Sentences:
-    #     print("item : ", item)
-
     sentences_count = 0
-    # print(sentences)
     for sentence in sentences:
         sentence_signal = {}
         sentence_signal[sentence_label] = sentence
@@ -103,32 +91,15 @@ def AssociateSentenceLevelTags(text):
         sentence_signal[typeOfSentence] = getSentenceType(sentence, sentence_signal[pos_tagged_sentence])
         sentence_signal[timeStamp] = getSystemTime()
 
-        # words = word_tokenize(sentence)
-        # # print(words)
-        # word_count = 0
-        # words_signal = {}
-        # for word in words:
-        #     word_signal = {}
-        #     word_signal[word_label] = word
-        #     words_signal[word_count] = word_signal
-        #     word_count += 1
-        # # print("words_signal", words_signal)
-
         words_signal = Word_Level_Tagged_Sentences[sentences_count]
+
+        getLocation_NE(words_signal)
+
 
         sentence_signal[words_in_sentence] = words_signal
 
         sentences_signal[sentences_count] = sentence_signal
         sentences_count += 1
-
-    # print("sentence signal : ", sentences_signal)
-    # for sentence_signal_count in sentences_signal:
-    #     #     print(sentence_signal_count)
-    #     #     print("sentence_signal_id : ", sentence_count, "\nsentence_signal : ", sentences_signal[sentence_count])
-    #     #     print("___DETAILS___")
-    #     print("sentence_signal_id : ", sentence_signal_count)
-    #     for attribute in sentences_signal[sentence_signal_count]:
-    #         print("\t\t", attribute, " : ", sentences_signal[sentence_signal_count][attribute])
 
     return sentences_signal
 
@@ -136,7 +107,7 @@ def AssociateSentenceLevelTags(text):
 if __name__ == '__main__':
 
     # text = input("Text : ")
-    document = "hello there. me good."
+    document = "The Washington Monument is the most prominent structure in Washington, D.C. and one of the city's early attractions. It was built in honor of George Washington, who led the country to independence and then became its first President."
 
     sentences_signal = AssociateSentenceLevelTags(document)
 

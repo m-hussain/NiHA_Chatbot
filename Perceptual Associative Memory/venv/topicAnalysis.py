@@ -1,5 +1,3 @@
-
-
 def getTopic(Sentence):
 
     topics = "Small Talk"

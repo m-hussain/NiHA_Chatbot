@@ -36,7 +36,7 @@ def getGPSLocation():
         parsed_json = json.loads(response)
         #print(type(parsed_json))
         # print("city : ", parsed_json['city'])
-        city = parsed_json['city']
+        city = parsed_json['region']
         location = parsed_json['loc']
         return city, location
     else:
@@ -65,12 +65,13 @@ def getLocation(Sentence):
 
 
 #Testing Interface
-p = getGPSLocation()
-print("Place : ", p)
-
-while(True):
-    s = input("Sentence : ")
-    p = getLocation(s)
+if __name__ == '__main__':
+    p = getGPSLocation()
     print("Place : ", p)
+
+    while(True):
+        s = input("Sentence : ")
+        p = getLocation(s)
+        print("Place : ", p)
 
 

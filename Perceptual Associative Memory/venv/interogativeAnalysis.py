@@ -318,7 +318,8 @@ class Interogative:
 
 
 ### TESTING ####
-q = Interogative()
-while(True):
-    sentence = input("Sentence : ")
-    print("Is Question : ", q.isQuestion(sentence))
+if __name__ == '__main__':
+    q = Interogative()
+    while(True):
+        sentence = input("Sentence : ")
+        print("Is Question : ", q.isQuestion(sentence))
