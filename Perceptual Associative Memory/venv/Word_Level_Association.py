@@ -66,16 +66,8 @@ sentences = \
 
 """""
 
-from nltk import word_tokenize, sent_tokenize, pos_tag, ne_chunk_sents
-from I_Fix import fix_i
-
-def AssociateWordLevelTags(text):
+def AssociateWordLevelTags(chunked_sentences) -> dict:
     tagged_text = {}
-
-    sentences = sent_tokenize(text)
-    tokenized_sentences = [word_tokenize(sentence) for sentence in sentences]
-    tagged_sentences = [pos_tag(fix_i(sentence)) for sentence in tokenized_sentences]
-    chunked_sentences = ne_chunk_sents(tagged_sentences)
 
     sentence_count = 0
     for tree in chunked_sentences:
@@ -101,17 +93,23 @@ def AssociateWordLevelTags(text):
     return tagged_text
 
 if __name__ == '__main__':
+    from nltk import word_tokenize, sent_tokenize, pos_tag, ne_chunk_sents
+    from I_Fix import fix_i
+    from utilities import print_word_signal
     # with open('sample.txt', 'r') as f:
     #     document = f.read()
 
-    document = "My Name is Mahmood Hussain. i live in Lahore, Punjab, Pakistan. i study in COMSATS University Islamabad."
+    # document = "My Name is Mahmood Hussain. i live in Lahore, Punjab, Pakistan. i study in COMSATS University Islamabad."
+    document = "hello there. me good."
 
-    tagged_text = AssociateWordLevelTags(document)
+    sentences = sent_tokenize(document)
+    tokenized_sentences = [word_tokenize(sentence) for sentence in sentences]
+    tagged_sentences = [pos_tag(fix_i(sentence)) for sentence in tokenized_sentences]
+    chunked_sentences = ne_chunk_sents(tagged_sentences)
+
+    tagged_text = AssociateWordLevelTags(chunked_sentences)
 
     print("tagged text: \n", tagged_text)
-    for sentence in tagged_text:
-        print("sentence ",sentence, " : ")
-        words = tagged_text[sentence]
-        for word in words:
-            print("\t\tword ",word," : ", words[word])
-        print()
+
+    # print_word_signal(tagged_text)
+

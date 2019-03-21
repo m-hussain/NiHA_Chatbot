@@ -44,11 +44,13 @@
 #from nltk import sent_tokenize, word_tokenize
 from nltk import word_tokenize, sent_tokenize, pos_tag, ne_chunk_sents
 from SentimentAnalyzer import getSentiment
-from Type_of_Sentence_Analyzer import getType
+from Type_of_Sentence_Analyzer import getSentenceType
 from SystemTime import getSystemTime
 from I_Fix import fix_i
 from ContractionExpander import expandContraction
 from utilities import print_sentences_signal
+from Word_Level_Association import AssociateWordLevelTags
+
 
 ## SENTENCE LEVEL PROPERTIES
 sentence_label      = "sentence_label"
@@ -67,15 +69,15 @@ word_pos            = "word_pos"
 word_ne             = "entity"
 
 
-while (True):
+def AssociateSentenceLevelTags(text):
     sentences_signal = {}
-    text = input("Text : ")
     text = expandContraction(text)
     # text = "This is cat. Cat is cute."
     #sentences = sent_tokenize(text)
 
     sentences = sent_tokenize(text)
     tokenized_sentences = [word_tokenize(sentence) for sentence in sentences]
+    # print("tokenized_sentences : ", tokenized_sentences)
     tagged_sentences = [pos_tag(fix_i(sentence)) for sentence in tokenized_sentences]
     chunked_sentences = ne_chunk_sents(tagged_sentences)
     #
@@ -86,6 +88,10 @@ while (True):
     #     tagged_text["sentence_pos"] = tagged_sentence
     #
 
+    Word_Level_Tagged_Sentences = AssociateWordLevelTags(chunked_sentences)
+
+    # for item in Word_Level_Tagged_Sentences:
+    #     print("item : ", item)
 
     sentences_count = 0
     # print(sentences)
@@ -94,18 +100,22 @@ while (True):
         sentence_signal[sentence_label] = sentence
         sentence_signal[sentiment] = getSentiment(sentence)
         sentence_signal[pos_tagged_sentence] = tagged_sentences[sentences_count]
-        sentence_signal[typeOfSentence] = getType(sentence, sentence_signal[pos_tagged_sentence])
+        sentence_signal[typeOfSentence] = getSentenceType(sentence, sentence_signal[pos_tagged_sentence])
         sentence_signal[timeStamp] = getSystemTime()
-        words = word_tokenize(sentence)
-        # print(words)
-        word_count = 0
-        words_signal = {}
-        for word in words:
-            word_signal = {}
-            word_signal[word_label] = word
-            words_signal[word_count] = word_signal
-            word_count += 1
-        # print("words_signal", words_signal)
+
+        # words = word_tokenize(sentence)
+        # # print(words)
+        # word_count = 0
+        # words_signal = {}
+        # for word in words:
+        #     word_signal = {}
+        #     word_signal[word_label] = word
+        #     words_signal[word_count] = word_signal
+        #     word_count += 1
+        # # print("words_signal", words_signal)
+
+        words_signal = Word_Level_Tagged_Sentences[sentences_count]
+
         sentence_signal[words_in_sentence] = words_signal
 
         sentences_signal[sentences_count] = sentence_signal
@@ -120,4 +130,15 @@ while (True):
     #     for attribute in sentences_signal[sentence_signal_count]:
     #         print("\t\t", attribute, " : ", sentences_signal[sentence_signal_count][attribute])
 
+    return sentences_signal
+
+
+if __name__ == '__main__':
+
+    # text = input("Text : ")
+    document = "hello there. me good."
+
+    sentences_signal = AssociateSentenceLevelTags(document)
+
     print_sentences_signal(sentences_signal)
+

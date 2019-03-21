@@ -1,9 +1,10 @@
 from QuestionRecognizer import isQuestion
 
 # Getting Type by analyzing all possible types of sentences
-def getType(Sentence, POS_Tagged_Sentence):
+def getSentenceType(Sentence, POS_Tagged_Sentence):
 
     sentenceType = "statement"
+    reason = ["Reason : No other rule matched."]
 
     isQ, reason = isQuestion(Sentence, POS_Tagged_Sentence)
     if isQ:
