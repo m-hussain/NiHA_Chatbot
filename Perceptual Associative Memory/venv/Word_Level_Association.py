@@ -66,7 +66,7 @@ sentences = \
 
 """""
 
-def AssociateWordLevelTags(chunked_sentences) -> dict:
+def AssociateWordLevelTags(chunked_sentences):
     tagged_text = {}
 
     sentence_count = 0
@@ -76,6 +76,7 @@ def AssociateWordLevelTags(chunked_sentences) -> dict:
         for child in tree:
             word_tags = {}
             if hasattr(child, 'label'):
+                #print("labeled_child : ", child)
                 word_tags["word_label"] = child[0][0]
                 word_tags["pos_tag"] = child[0][1]
                 word_tags["ne_Tag"] = child.label()
@@ -99,8 +100,8 @@ if __name__ == '__main__':
     # with open('sample.txt', 'r') as f:
     #     document = f.read()
 
-    # document = "My Name is Mahmood Hussain. i live in Lahore, Punjab, Pakistan. i study in COMSATS University Islamabad."
-    document = "hello there. me good."
+    document = "My Name is Mahmood Hussain. i live in Lahore, Punjab, Pakistan. i study in COMSATS University Islamabad."
+    # document = "hello there. me good."
 
     sentences = sent_tokenize(document)
     tokenized_sentences = [word_tokenize(sentence) for sentence in sentences]
@@ -109,7 +110,7 @@ if __name__ == '__main__':
 
     tagged_text = AssociateWordLevelTags(chunked_sentences)
 
-    print("tagged text: \n", tagged_text)
+    #print("tagged text: \n", tagged_text)
 
-    # print_word_signal(tagged_text)
+    print_word_signal(tagged_text)
 

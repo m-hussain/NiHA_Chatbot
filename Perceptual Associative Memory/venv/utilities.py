@@ -16,3 +16,11 @@ def print_word_signal(word_signal:dict):
         for word in words:
             print("\t\tword ",word," : ", words[word])
         print()
+
+def print_phrase_signal(phrases_signal:dict):
+    for sentence in phrases_signal:
+        print("sentence ",sentence, " : ")
+        phrases = phrases_signal[sentence]
+        for phrase in phrases:
+            print("\t\tphrase ",phrase," : ", phrases[phrase])
+        print()

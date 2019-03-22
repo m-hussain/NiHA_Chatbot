@@ -36,7 +36,7 @@ def getGPSLocation():
         parsed_json = json.loads(response)
         #print(type(parsed_json))
         # print("city : ", parsed_json['city'])
-        city = parsed_json['region']
+        city = parsed_json['city']
         location = parsed_json['loc']
         return city, location
     else:
