@@ -52,14 +52,15 @@ from utilities import print_sentences_signal
 from Word_Level_Association import AssociateWordLevelTags
 from LocationAnalyzer import getLocation_Sent_NE
 from SentenceNE import setSentNE
-from PersonAnalyzer import getPersonFromSentence
+from PersonAnalyzer import getPerson
 from TopicAnalyzer import getTopic
 
 
 ## SENTENCE LEVEL PROPERTIES
 sentence_label      = "sentence_label"  #done
+sentence_tokens     = "sentence_tokens" #done
 pos_tagged_sentence = "sentence_pos"    #done
-#ne_tagged_sentence  = "sentence_ne"
+ne_tagged_sentence  = "sentence_ne"     #done
 words_in_sentence   = "words"           #done
 sentiment           = "sentiment"       #done
 person              = "person"          #done
@@ -67,7 +68,7 @@ place               = "location"        #done
 timeStamp           = "timeStamp"       #done
 timeOfConversation  = "tense"           #done
 typeOfSentence      = "type"            #done
-topicOfSentence     = "topic"
+topicOfSentence     = "topic"           #done
 
 ## WORD LEVEL PROPERTIES
 word_label          = "word_label"
@@ -82,6 +83,7 @@ def AssociateSentenceLevelTags(text):
     ##TODO use sentence__level__pos_tagger and sentence__level__word_tokenizer
     sentences = sent_tokenize(text)
     tokenized_sentences = [word_tokenize(sentence) for sentence in sentences]
+    # print("tokenized_sentences : ", tokenized_sentences)
     tagged_sentences = [pos_tag(fix_i(sentence)) for sentence in tokenized_sentences]
     chunked_sentences = ne_chunk_sents(tagged_sentences)
     chunked_sentences1 = ne_chunk_sents(tagged_sentences)
@@ -95,9 +97,9 @@ def AssociateSentenceLevelTags(text):
     #print("chunked_sentences1 : ",chunked_sentences1)
 
     ne_tagged_sentences = setSentNE(chunked_sentences1)
-    #print("ne_tagged_sentence : ", ne_tagged_sentences)
+    # print("ne_tagged_sentence : ", ne_tagged_sentences)
 
-    #print("chunked_sentences : ",chunked_sentences)
+    # print("chunked_sentences : ",chunked_sentences)
 
 
     sentences_count = 0
@@ -105,9 +107,10 @@ def AssociateSentenceLevelTags(text):
         sentence_signal = {}
         sentence_signal[sentence_label] = sentence
         sentence_signal[sentiment] = getSentiment(sentence)
+        sentence_signal[sentence_tokens] = tokenized_sentences[sentences_count]
         sentence_signal[pos_tagged_sentence] = tagged_sentences[sentences_count]
-        #print("ne_tagged_sentences[sentences_count] : ", ne_tagged_sentences[sentences_count])
-        #sentences_signal["sentence_ne"] = "sentence_ne" #ne_tagged_sentences[sentences_count]
+        # print("ne_tagged_sentences[sentences_count] : ", ne_tagged_sentences[sentences_count])
+        sentence_signal[ne_tagged_sentence] = ne_tagged_sentences[sentences_count]
         sentence_signal[typeOfSentence] = getSentenceType(sentence, sentence_signal[pos_tagged_sentence])
         sentence_signal[timeStamp] = getSystemTime()
 
@@ -116,11 +119,12 @@ def AssociateSentenceLevelTags(text):
 
 
         sentence_signal[place] = getLocation_Sent_NE(ne_tagged_sentences[sentences_count])
-        #print(ne_tagged_sentences[sentences_count])
-        sentence_signal[person] = getPersonFromSentence(ne_tagged_sentences[sentences_count])
+        # print(ne_tagged_sentences[sentences_count])
+
+        sentence_signal[person] = getPerson(ne_tagged_sentences[sentences_count], tokenized_sentences[sentences_count])
 
         sentence_signal[words_in_sentence] = words_signal
-        print("sentence : ", sentence)
+        # print("sentence : ", sentence)
 
         sentence_signal[topicOfSentence] = getTopic(sentence)
 
@@ -133,7 +137,7 @@ def AssociateSentenceLevelTags(text):
 if __name__ == '__main__':
 
     # text = input("Text : ")
-    document = "My Name is Mahmood Hussain. i live in Lahore, Punjab, Pakistan. i study in COMSATS University Islamabad."
+    document = "My Name is Wajahat Mehmood Qazi. i live in Lahore, Punjab, Pakistan. i study in COMSATS University Islamabad."
 
     #document = "The Washington Monument is the most prominent structure in Washington, D.C. and one of the city's early attractions. It was built in honor of George Washington, who led the country to independence and then became its first President."
 

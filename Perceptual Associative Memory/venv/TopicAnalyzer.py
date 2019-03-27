@@ -18,7 +18,7 @@ def clean(doc):
 
 def getTopic(Text:str):
     topic_dict = {}
-    print("text received : ", Text)
+    # print("text received : ", Text)
 
     doc_clean = [clean(Text).split()]
     # print("doc_clean : ", doc_clean)
@@ -35,7 +35,7 @@ def getTopic(Text:str):
     topic_dict["term"] = term
     topic_dict["probablity"] = probability
 
-    print("Returning : ", topic_dict)
+    # print("Returning : ", topic_dict)
 
     return topic_dict
 
