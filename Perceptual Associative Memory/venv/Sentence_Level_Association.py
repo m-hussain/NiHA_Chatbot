@@ -53,7 +53,8 @@ from Word_Level_Association import AssociateWordLevelTags
 from LocationAnalyzer import getLocation_Sent_NE
 from SentenceNE import setSentNE
 from PersonAnalyzer import getPersonFromSentence
-import copy
+from TopicAnalyzer import getTopic
+
 
 ## SENTENCE LEVEL PROPERTIES
 sentence_label      = "sentence_label"  #done
@@ -61,12 +62,12 @@ pos_tagged_sentence = "sentence_pos"    #done
 #ne_tagged_sentence  = "sentence_ne"
 words_in_sentence   = "words"           #done
 sentiment           = "sentiment"       #done
-person              = "person"
-place               = "location"
+person              = "person"          #done
+place               = "location"        #done
 timeStamp           = "timeStamp"       #done
 timeOfConversation  = "tense"           #done
 typeOfSentence      = "type"            #done
-topic               = "topic"
+topicOfSentence     = "topic"
 
 ## WORD LEVEL PROPERTIES
 word_label          = "word_label"
@@ -119,6 +120,9 @@ def AssociateSentenceLevelTags(text):
         sentence_signal[person] = getPersonFromSentence(ne_tagged_sentences[sentences_count])
 
         sentence_signal[words_in_sentence] = words_signal
+        print("sentence : ", sentence)
+
+        sentence_signal[topicOfSentence] = getTopic(sentence)
 
         sentences_signal[sentences_count] = sentence_signal
         sentences_count += 1
