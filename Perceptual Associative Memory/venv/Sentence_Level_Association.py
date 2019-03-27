@@ -54,6 +54,7 @@ from LocationAnalyzer import getLocation_Sent_NE
 from SentenceNE import setSentNE
 from PersonAnalyzer import getPerson
 from TopicAnalyzer import getTopic
+from TimeAnalyzer import getTense
 
 
 ## SENTENCE LEVEL PROPERTIES
@@ -113,6 +114,7 @@ def AssociateSentenceLevelTags(text):
         sentence_signal[ne_tagged_sentence] = ne_tagged_sentences[sentences_count]
         sentence_signal[typeOfSentence] = getSentenceType(sentence, sentence_signal[pos_tagged_sentence])
         sentence_signal[timeStamp] = getSystemTime()
+        sentence_signal[timeOfConversation] = getTense(tagged_sentences[sentences_count])
 
         #print("Word_Level_Tagged_Sentences[sentences_count] : ", Word_Level_Tagged_Sentences[sentences_count])
         words_signal = Word_Level_Tagged_Sentences[sentences_count]

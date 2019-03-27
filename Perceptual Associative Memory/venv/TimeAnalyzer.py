@@ -1,7 +1,3 @@
-from posTagger import tagPOS
-from SystemTime import getSystemTime
-
-time = getSystemTime()
 
 isFuture    = False
 
@@ -49,6 +45,11 @@ def getTense(posTaggedSentence):
 ##TESTING INTERFACE##
 
 if __name__ == '__main__':
+    from posTagger import tagPOS
+    from SystemTime import getSystemTime
+
+    time = getSystemTime()
+
     while(True):
 
         sentence = input("Sentence : ")

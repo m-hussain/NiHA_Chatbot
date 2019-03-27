@@ -4,11 +4,12 @@ from QuestionRecognizer import isQuestion
 def getSentenceType(Sentence, POS_Tagged_Sentence):
 
     sentenceType = "statement"
-    reason = ["Reason : No other rule matched."]
+    default_reason = ["Reason : No other rule matched."]
 
     isQ, reason = isQuestion(Sentence, POS_Tagged_Sentence)
     if isQ:
         sentenceType = "interrogative"
+        default_reason = reason
 
     # isN, reason = isNegation(Sentence, POS_Tagged_Sentence)
     # if isN:
@@ -22,7 +23,7 @@ def getSentenceType(Sentence, POS_Tagged_Sentence):
     # if isO:
     #     sentenceType = "Order"
 
-    return sentenceType, reason
+    return sentenceType, default_reason
 
 
 """

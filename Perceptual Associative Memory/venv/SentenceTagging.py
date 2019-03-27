@@ -1,5 +1,5 @@
 from    SentimentAnalyzer       import *
-from    timeAnalysis            import *
+from    TimeAnalyzer            import *
 from    placeAnalysis           import *
 from    personAnalysis          import *
 from    topicAnalysis           import *
