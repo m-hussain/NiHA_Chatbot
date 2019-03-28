@@ -2,46 +2,44 @@ import sys
 sys.path.append("../../../NiHA_Chatbot/")
 
 from thrift_code.GenPy.SignalTransfer_NameSpace import SignalTransfer_Service
-
-
 # from ...thrift_code.GenPy.SignalTransfer_NameSpace import SignalTransfer_Service
 
 import _pickle as pickle
-
-# from PIL import Image
-import io
 
 from thrift import Thrift
 from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
-# from genpy.imageTransfer import ImageTransfer
+import json
+configurations = open("../../Configurations/config.json",'r').read()
+configurations = json.loads(configurations)
+SensorySocket = configurations["SensorySocket"]
 
 try:
-    transport = TSocket.TSocket('localhost', 9090)
+    transport = TSocket.TSocket(SensorySocket["ip"], SensorySocket["port"])
     transport = TTransport.TBufferedTransport(transport)
     protocol = TBinaryProtocol.TBinaryProtocol(transport)
     client = SignalTransfer_Service.Client(protocol)
     transport.open()
 
+    lastText = ''
+    while True:
+        bytesData = client.getBinaryStream()
 
-    bytesData = client.getBinaryStream()
+        SensorySignal = pickle.loads(bytesData)
 
-    print("bytesData : ", bytesData)
+        text = SensorySignal['text']
 
-    # stream = io.BytesIO(bytesData)
-    #
-    # print("stream converted by BytesIO : ", stream)
+        if text == '' or lastText:
+            continue
 
-    # img = Image.open(stream)
-    # print(img)
-    # img.show()
-    # img.save("test.png")
+        print("SensorySignal : ", SensorySignal)
 
-    SensorySignal = pickle.loads(bytesData)
+        if text == "quit":
+            break
 
-    print("SensorySignal : ", SensorySignal)
+        lastText = text
 
     transport.close()
 
