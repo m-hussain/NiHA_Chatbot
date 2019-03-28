@@ -59,6 +59,8 @@ def getTextFromSpeech(audio = None, recognizer = None):
 
     return recognizedText
 
+
+
 if __name__ == '__main__':
     try:
         microphone, recognizer = initializer()
@@ -74,6 +76,7 @@ if __name__ == '__main__':
             print("Got it! Now to recognize it...")
             recognizedText = getTextFromSpeech(audio, recognizer)
             recognizedText = standardizeText(recognizedText)
+            PublishData(recognizedText)
             print("You said : ", recognizedText)
     except KeyboardInterrupt:
         pass
