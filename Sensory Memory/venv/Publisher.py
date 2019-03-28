@@ -3,68 +3,56 @@ sys.path.append("../../../NiHA_Chatbot/")
 
 from thrift_code.GenPy.SignalTransfer_NameSpace import SignalTransfer_Service
 
-import io
 import _pickle as pickle
-
-#from genpy.imageTransfer import ImageTransfer
 
 from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 from thrift.server import TServer
 
+import json
+configurations = open("../../Configurations/config.json",'r').read()
+configurations = json.loads(configurations)
+SensorySocket = configurations["SensorySocket"]
+
 
 class SignalTransferHandler:
+    dataToPublish = "Text from sensory memory...."
 
-# print("")
-
+    def PublishData(self, SensorySignal):
+        print("Data Received : ", SensorySignal)
+        SignalTransferHandler.dataToPublish = SensorySignal
 
     def getBinaryStream(self):
         sensorySignal = {}
-        text = "Text from sensory memory."
-        sensorySignal["text"] = text
-        print("text : ", text)
-        print("sensorySignal : ", sensorySignal)
+        # text = "Text from sensory memory...."
+        text = SignalTransferHandler.dataToPublish
 
-        # ByteArr = io.BytesIO()
-        ##text.save(imgByteArr, format='PNG')
-        # imgByteArr = imgByteArr.getvalue()
+        sensorySignal["text"] = text
+        # print("text : ", text)
+        # print("sensorySignal : ", sensorySignal)
 
         binary = pickle.dumps(sensorySignal, -1)
 
-        print("binary : ", binary)
+        # print("binary : ", binary)
 
-        print("type : ", type(binary))
+        # print("type : ", type(binary))
 
         return binary
 
-if __name__ == '__main__':
+def __main__():
     handler = SignalTransferHandler()
+    print("data by other object : ", handler.dataToPublish)
     processor = SignalTransfer_Service.Processor(handler)
-    transport = TSocket.TServerSocket(host='127.0.0.1', port=9090)
+    transport = TSocket.TServerSocket(host=SensorySocket["ip"], port=SensorySocket["port"])
     tfactory = TTransport.TBufferedTransportFactory()
     pfactory = TBinaryProtocol.TBinaryProtocolFactory()
 
     server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
-    print("Starting python server...")
+    print("Ready to Publish Data..")
 
     server.serve()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def PublishData(SensorySignal):
-    pass
+if __name__ == '__main__':
+    __main__()

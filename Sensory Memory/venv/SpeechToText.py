@@ -1,6 +1,12 @@
 #from googleTranslate import translateThis
 #from TTS_pyttsx3 import speakThis
+
+from Publisher import SignalTransferHandler
+
 import speech_recognition as sr
+
+
+Signal = SignalTransferHandler()
 
 def initializer():
     #print("in init")
@@ -61,7 +67,7 @@ def getTextFromSpeech(audio = None, recognizer = None):
 
 
 
-if __name__ == '__main__':
+def __main__():
     try:
         microphone, recognizer = initializer()
 
@@ -76,7 +82,10 @@ if __name__ == '__main__':
             print("Got it! Now to recognize it...")
             recognizedText = getTextFromSpeech(audio, recognizer)
             recognizedText = standardizeText(recognizedText)
-            PublishData(recognizedText)
+            Signal.PublishData(recognizedText)
             print("You said : ", recognizedText)
     except KeyboardInterrupt:
         pass
+
+if __name__ == '__main__':
+    __main__()

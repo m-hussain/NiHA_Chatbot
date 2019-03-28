@@ -1,17 +1,25 @@
-import _pickle as pickle
+import threading
+import time
 
-sensorySignal = {}
-text = "Text from sensory memory."
-sensorySignal["text"] = text
-print("text : ",text)
-print("sensorySignal : ",sensorySignal)
+import SpeechToText
+import Publisher
 
-# ByteArr = io.BytesIO()
-##text.save(imgByteArr, format='PNG')
-# imgByteArr = imgByteArr.getvalue()
+def publisher():
+    Publisher.__main__()
+    # print(threading.currentThread().getName(), 'Starting')
+    # #time.sleep(1)
+    # print(threading.currentThread().getName(), 'Exiting')
 
-binary = pickle.dumps(sensorySignal, -1)
+def mainThread():
+    SpeechToText.__main__()
+    # print(threading.currentThread().getName(), 'Starting')
+    # #time.sleep()
+    # print(threading.currentThread().getName(), 'Exiting')
 
-print("binary : ",binary)
+t = threading.Thread(name='my_service', target=publisher)
+w = threading.Thread(name='worker', target=mainThread)
+#w2 = threading.Thread(target=worker) # use default name
 
-print("type : ", type(binary))
+w.start()
+#w2.start()
+t.start()
