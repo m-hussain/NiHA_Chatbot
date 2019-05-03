@@ -1,0 +1,38 @@
+ 1  direct_father_son
+ 2      use father_son($father, $son, ())
+ 3      when
+ 4          family2.son_of($son, $father)
+
+ 5  grand_father_son
+ 6      use father_son($grand_father, $grand_son, (grand))
+ 7      when
+ 8          father_son($father, $grand_son, ())
+ 9          father_son($grand_father, $father, ())
+
+10  great_grand_father_son
+11      use father_son($gg_father, $gg_son, (great, $prefix1, *$rest_prefixes))
+12      when
+13          father_son($father, $gg_son, ())
+14          father_son($gg_father, $father, ($prefix1, *$rest_prefixes))
+
+15  brothers
+16      use brothers($brother1, $brother2)
+17      when
+18          father_son($father, $brother1, ())
+19          father_son($father, $brother2, ())
+20          check $brother1 != $brother2
+
+21  uncle_nephew
+22      use uncle_nephew($uncle, $nephew, $prefix)
+23      when
+24          brothers($uncle, $father)
+25          father_son($father, $nephew, $prefix1)
+26          $prefix = ('great',) * len($prefix1)
+
+27  cousins
+28      use cousins($cousin1, $cousin2, $distance, $removed)
+29      when
+30          uncle_nephew($uncle, $cousin1, $prefix1)
+31          father_son($uncle, $cousin2, $prefix2)
+32          $distance = min(len($prefixes1), len($prefixes2)) + 1
+33          $removed = abs(len($prefixes1) - len($prefixes2))

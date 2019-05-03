@@ -1,12 +1,11 @@
 #from googleTranslate import translateThis
 #from TTS_pyttsx3 import speakThis
 
-from Publisher import SignalTransferHandler
+# from Publisher_Client import SignalTransferClient
+# from OpinosisGraph import makeGraph
+# client = SignalTransferClient()
 
 import speech_recognition as sr
-
-
-Signal = SignalTransferHandler()
 
 def initializer():
     #print("in init")
@@ -76,14 +75,21 @@ def __main__():
 
         print("Set minimum energy threshold to {}".format(recognizer.energy_threshold))
 
+        textCounter = 0
+
         while True:
+            textCounter += 1
             print("Say something!")
             audio = getAudio(microphone, recognizer)
             print("Got it! Now to recognize it...")
             recognizedText = getTextFromSpeech(audio, recognizer)
             recognizedText = standardizeText(recognizedText)
-            Signal.PublishData(recognizedText)
+            # client.publishSensoryData(recognizedText)
             print("You said : ", recognizedText)
+            # makeGraph(recognizedText, textCounter)
+            if recognizedText == "quit":
+                break
+
     except KeyboardInterrupt:
         pass
 
