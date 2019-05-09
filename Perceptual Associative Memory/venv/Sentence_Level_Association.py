@@ -58,18 +58,18 @@ from TimeAnalyzer import getTense
 
 
 ## SENTENCE LEVEL PROPERTIES
-sentence_label      = "sentence_label"  #done
-sentence_tokens     = "sentence_tokens" #done
-pos_tagged_sentence = "sentence_pos"    #done
-ne_tagged_sentence  = "sentence_ne"     #done
-words_in_sentence   = "words"           #done
-sentiment           = "sentiment"       #done
-person              = "person"          #done
-place               = "location"        #done
-timeStamp           = "timeStamp"       #done
-timeOfConversation  = "tense"           #done
-typeOfSentence      = "type"            #done
-topicOfSentence     = "topic"           #done
+sentence_label      = "sentence_label"      # done
+sentence_tokens     = "sentence_tokens"     # done
+pos_tagged_sentence = "sentence_pos"        # done
+ne_tagged_sentence  = "sentence_ne"         # done
+words_in_sentence   = "words"               # done
+sentiment           = "sentiment"           # done
+person              = "person"              # done
+place               = "location"            # done
+timeStamp           = "timeStamp"           # done
+timeOfConversation  = "tense"               # done
+typeOfSentence      = "type"                # done
+topicOfSentence     = "topic"               # done
 
 ## WORD LEVEL PROPERTIES
 word_label          = "word_label"
